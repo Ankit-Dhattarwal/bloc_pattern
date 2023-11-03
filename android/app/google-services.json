@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "959848817019",
+    "project_id": "phone-auth-bloc-bcbab",
+    "storage_bucket": "phone-auth-bloc-bcbab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:959848817019:android:1065b1fafdeeec08459dde",
+        "android_client_info": {
+          "package_name": "com.example.bloc_pattern"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDhvkLGQNfDC3kg_aCy6ni1IXYAr7Nm6E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
