@@ -6,7 +6,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthCubit extends Cubit<AuthState>{
   final FirebaseAuth _auth = FirebaseAuth.instance;
-AuthCubit() : super( AuthInitialState());
+AuthCubit() : super( AuthInitialState()){
+
+  // Yaha ye use nyu kiya gaya hai ki agar mai reload kru too hime page pe aau na ki sing wale page par
+  User? currentUser = _auth.currentUser;
+  if(currentUser != null){
+    //loggedIn
+    emit(AuthLoggedInState(currentUser));
+  }
+  else{
+    //loggedOut
+    emit(AuthLoggedOutState());
+  }
+
+}
 
 String? _verificationId;
 
@@ -58,5 +71,10 @@ String? _verificationId;
     } on FirebaseAuthException catch(ex){
       emit(AuthErrorState(ex.message.toString()));
     }
+  }
+
+  void LogOut() async{
+    await _auth.signOut();
+    emit( AuthLoggedOutState() );
   }
 }

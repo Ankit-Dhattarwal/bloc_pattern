@@ -19,7 +19,27 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           child: Center(
-            child: Text('Ankit'),
+            child: BlocConsumer<AuthCubit, AuthState>(
+
+              listener: (BuildContext context, Object? state) {
+                if(state is AuthLoggedOutState){
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                  Navigator.pushReplacement(context,
+                      CupertinoPageRoute(
+                    builder: (context) => SignInScreen(),
+                  ));
+                }
+              },
+
+              builder: (BuildContext context, state) {
+                return CupertinoButton(
+                  onPressed: (){
+                    BlocProvider.of<AuthCubit>(context).LogOut();
+                  },
+                  child: Text('Log Out'),
+                );
+              },
+            ),
             // child: BlocConsumer<AuthCubit, AuthState>(
             //   listener: (context, state) {
             //

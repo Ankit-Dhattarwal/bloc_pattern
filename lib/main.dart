@@ -1,6 +1,7 @@
 import 'package:bloc_pattern/Bloc/Internet_Bloc/internet_bloc.dart';
 import 'package:bloc_pattern/Cubits/internet_cubits.dart';
 import 'package:bloc_pattern/Phone_auth_bloc/cubits/auth_cubit/auth_cubit.dart';
+import 'package:bloc_pattern/Phone_auth_bloc/cubits/auth_cubit/auth_state.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +31,26 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home:  SignInScreen(),
+        home:  BlocBuilder<AuthCubit, AuthState>(
+          buildWhen: (oldState , newState){
+
+            // ye use nyu kiya gaya hai ki baar home screen pe call na ho ek baar hu call ho
+            // vo b initial mai jab b home me state cahnge ho too call na ho baar baar
+            return oldState is AuthInitialState;
+          },
+            builder: (BuildContext context, state) {
+              if(state is AuthLoggedInState){
+                return HomeScreen();
+              }
+              else if(state is AuthLoggedOutState){
+                return SignInScreen();
+              }
+              else{
+                // here you can create a splace screen and go to their but now we use scafflod
+                return Scaffold();
+              }
+            },
+        ),
       ),
     );
 
