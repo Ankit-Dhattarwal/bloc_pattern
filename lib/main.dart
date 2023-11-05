@@ -1,5 +1,8 @@
 import 'package:bloc_pattern/Bloc/Internet_Bloc/internet_bloc.dart';
 import 'package:bloc_pattern/Cubits/internet_cubits.dart';
+import 'package:bloc_pattern/Generated_routes_bloc/cubits/first_cubits.dart';
+import 'package:bloc_pattern/Generated_routes_bloc/routes/routes.dart';
+import 'package:bloc_pattern/Generated_routes_bloc/screen/first_screen.dart';
 import 'package:bloc_pattern/Phone_auth_bloc/cubits/auth_cubit/auth_cubit.dart';
 import 'package:bloc_pattern/Phone_auth_bloc/cubits/auth_cubit/auth_state.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,7 +25,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // Here for the phone auth
     return BlocProvider(
       create: (content) => AuthCubit(),
       child: MaterialApp(
@@ -31,28 +33,47 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home:  BlocBuilder<AuthCubit, AuthState>(
-          buildWhen: (oldState , newState){
 
-            // ye use nyu kiya gaya hai ki baar home screen pe call na ho ek baar hu call ho
-            // vo b initial mai jab b home me state cahnge ho too call na ho baar baar
-            return oldState is AuthInitialState;
-          },
-            builder: (BuildContext context, state) {
-              if(state is AuthLoggedInState){
-                return HomeScreen();
-              }
-              else if(state is AuthLoggedOutState){
-                return SignInScreen();
-              }
-              else{
-                // here you can create a splace screen and go to their but now we use scafflod
-                return Scaffold();
-              }
-            },
-        ),
+        onGenerateRoute: Routes.onGenerateRoute,
+        initialRoute: "/first",
+        // home:  BlocProvider(
+        //   create: (BuildContext context) => FirstCubit(),
+        //   child: FirstScreen(),
+        // ),
       ),
     );
+
+    // Here for the phone auth
+    // return BlocProvider(
+    //   create: (content) => AuthCubit(),
+    //   child: MaterialApp(
+    //     title: 'Bloc Tutorial..',
+    //     theme: ThemeData(
+    //       colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    //       useMaterial3: true,
+    //     ),
+    //     home:  BlocBuilder<AuthCubit, AuthState>(
+    //       buildWhen: (oldState , newState){
+    //
+    //         // ye use nyu kiya gaya hai ki baar home screen pe call na ho ek baar hu call ho
+    //         // vo b initial mai jab b home me state cahnge ho too call na ho baar baar
+    //         return oldState is AuthInitialState;
+    //       },
+    //         builder: (BuildContext context, state) {
+    //           if(state is AuthLoggedInState){
+    //             return HomeScreen();
+    //           }
+    //           else if(state is AuthLoggedOutState){
+    //             return SignInScreen();
+    //           }
+    //           else{
+    //             // here you can create a splace screen and go to their but now we use scafflod
+    //             return Scaffold();
+    //           }
+    //         },
+    //     ),
+    //   ),
+    // );
 
     // return BlocProvider(
     //   // create: (BuildContext context) => InternetBloc(),
